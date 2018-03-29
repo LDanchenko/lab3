@@ -1,6 +1,7 @@
 package com.lab3;
 
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
+
 import java.sql.*;
 
 
@@ -14,6 +15,7 @@ public class Connect {
         Driver driver = null;
         try { //еслинету драйвера
             driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
         } catch (SQLException ex) {
             System.out.println("Ошибка при создании драйвера!");
             System.exit(0);
@@ -30,7 +32,7 @@ public class Connect {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
 
-            DatabaseMetaData metaData =  connection.getMetaData(); //проверяем, есть ли таблицы, если нет, создать
+            DatabaseMetaData metaData = connection.getMetaData(); //проверяем, есть ли таблицы, если нет, создать
             Statement statement = connection.createStatement();
 
 
@@ -50,7 +52,7 @@ public class Connect {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-}
+    }
 
 /*    public void existTables () {
         //проверить!!
