@@ -180,7 +180,6 @@ public class App {
                     e.printStackTrace();
                 }
                 table7.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboBoxStore));
-                String good = comboBoxStore.getSelectedItem().toString();
 
                 JComboBox comboBoxGoods = new JComboBox();
                 try {
@@ -233,21 +232,21 @@ public class App {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                               query = "UPDATE count SET store = '" + store + "' WHERE id = " + Integer.parseInt(table7.getValueAt(row, column - 2).toString());
-                                try {
-                                    statement.executeUpdate(query);
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                }
-                                int rowCount = 0;
-                                try {
-                                    rowCount = statement.getUpdateCount();
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                }
-                                if (rowCount <= 0) {
-                                    JOptionPane.showMessageDialog(null,  "Что то пошло не так");
-                                }
+                        query = "UPDATE count SET store = '" + store + "' WHERE id = " + Integer.parseInt(table7.getValueAt(row, column - 2).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
 
                     }
                     //товар
@@ -277,7 +276,7 @@ public class App {
                             e.printStackTrace();
                         }
                         if (rowCount <= 0) {
-                            JOptionPane.showMessageDialog(null,  "Что то пошло не так");
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
                         }
 
                     }
@@ -285,15 +284,6 @@ public class App {
 
                 }
 
-                 /*   statement.executeUpdate("UPDATE count SET name = '" + table6.getValueAt(row, column).toString() + "' WHERE id = " + Integer.parseInt(table6.getValueAt(row, column - 1).toString()));
-                    int rowCount = statement.getUpdateCount();
-                    if (rowCount <= 0) {
-                        JOptionPane.showMessageDialog(null,  "Что то пошло не так");
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                */
             }
         });
 
@@ -302,6 +292,296 @@ public class App {
                 "FROM orders o INNER JOIN addresses a ON o.address = a.id INNER JOIN goods g ON o.goods = g.id INNER JOIN clients c ON o.client = c.id  INNER JOIN transport t ON o.transport = t.id  " +
                 " INNER JOIN stores st ON o.store = st.id INNER JOIN status s ON o.status = s.id"));
         // table3.setModel(showData(statement, "SELECT a.name AS address FROM orders o INNER JOIN addresses a ON o.address = a.id"));
+        table3.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent tableModelEvent) {
+
+                JComboBox comboBoxAd = new JComboBox();
+                try {
+                    comboBoxFill(statement, "SELECT addresses.name  FROM addresses", comboBoxAd);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                table3.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboBoxAd));
+
+                JComboBox comboBoxGoods = new JComboBox();
+                try {
+                    comboBoxFill(statement, "SELECT goods.name  FROM goods", comboBoxGoods);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                table3.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(comboBoxGoods));
+
+                JComboBox comboBoxClients = new JComboBox();
+                try {
+                    comboBoxFill(statement, "SELECT clients.name  FROM clients", comboBoxClients);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                table3.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(comboBoxClients));
+
+                JComboBox comboBoxTransport = new JComboBox();
+                try {
+                    comboBoxFill(statement, "SELECT transport.name  FROM transport", comboBoxTransport);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                table3.getColumnModel().getColumn(7).setCellEditor(new DefaultCellEditor(comboBoxTransport));
+
+                JComboBox comboBoxStore = new JComboBox();
+                try {
+                    comboBoxFill(statement, "SELECT stores.name  FROM stores", comboBoxStore);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                table3.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(comboBoxStore));
+
+                JComboBox comboBoxStatus = new JComboBox();
+                try {
+                    comboBoxFill(statement, "SELECT status.name  FROM status", comboBoxStatus);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                table3.getColumnModel().getColumn(9).setCellEditor(new DefaultCellEditor(comboBoxStatus));
+
+                int row = table3.getSelectedRow();
+                int column = table3.getSelectedColumn();
+                String query = "";
+
+                switch (column) {
+                    //town
+                    case 1: {
+                        query = "UPDATE orders SET town = '" + table3.getValueAt(row, column).toString() + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 1).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+
+                    }
+
+                    case 2: {
+                        query = "UPDATE orders SET representation = '" + table3.getValueAt(row, column).toString() + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 2).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+
+                    }
+
+
+                    case 3: {
+                        query = "UPDATE orders SET route = '" + table3.getValueAt(row, column).toString() + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 3).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+
+                    }
+                    case 4: {
+                        int addressId = 0;
+                        try {
+                            String AddressName = table3.getValueAt(row, column).toString();
+                            ResultSet resultSet = statement.executeQuery("SELECT id FROM addresses WHERE addresses.name = '" + AddressName + "'");
+
+                            if (resultSet.next()) {
+                               addressId = Integer.parseInt(resultSet.getString(1));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        query = "UPDATE orders SET address = '" + addressId + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 4).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+                    }
+                    case 5: {
+                        int goodId = 0;
+                        try {
+                            String GoodName = table3.getValueAt(row, column).toString();
+                            ResultSet resultSet = statement.executeQuery("SELECT id FROM goods WHERE goods.name = '" + GoodName + "'");
+
+                            if (resultSet.next()) {
+                                goodId = Integer.parseInt(resultSet.getString(1));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        query = "UPDATE orders SET goods = '" + goodId + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 5).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+                    }
+                    case 6: {
+                        int clientId = 0;
+                        try {
+                            String ClientName = table3.getValueAt(row, column).toString();
+                            ResultSet resultSet = statement.executeQuery("SELECT id FROM clients WHERE clients.name = '" + ClientName + "'");
+
+                            if (resultSet.next()) {
+                                clientId = Integer.parseInt(resultSet.getString(1));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        query = "UPDATE orders SET client = '" + clientId + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 6).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+                    }
+                    //transport
+                    case 7: {
+                        int transportId = 0;
+                        try {
+                            String transportName = table3.getValueAt(row, column).toString();
+                            ResultSet resultSet = statement.executeQuery("SELECT id FROM transport WHERE transport.name = '" + transportName + "'");
+
+                            if (resultSet.next()) {
+                                transportId = Integer.parseInt(resultSet.getString(1));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        query = "UPDATE orders SET transport = '" + transportId + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 7).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+                    }
+                    //store
+                    case 8: {
+                        int storeId = 0;
+                        try {
+                            String storeName = table3.getValueAt(row, column).toString();
+                            ResultSet resultSet = statement.executeQuery("SELECT id FROM stores WHERE stores.name = '" + storeName + "'");
+
+                            if (resultSet.next()) {
+                                storeId = Integer.parseInt(resultSet.getString(1));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        query = "UPDATE orders SET store = '" + storeId + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 8).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+                    }
+                    case 9 : {
+                        int statusId = 0;
+                        try {
+                            String statusName = table3.getValueAt(row, column).toString();
+                            ResultSet resultSet = statement.executeQuery("SELECT id FROM status WHERE status.name = '" + statusName + "'");
+
+                            if (resultSet.next()) {
+                                statusId = Integer.parseInt(resultSet.getString(1));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        query = "UPDATE orders SET status = '" + statusId + "' WHERE id = " + Integer.parseInt(table3.getValueAt(row, column - 9).toString());
+                        try {
+                            statement.executeUpdate(query);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        int rowCount = 0;
+                        try {
+                            rowCount = statement.getUpdateCount();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        if (rowCount <= 0) {
+                            JOptionPane.showMessageDialog(null, "Что то пошло не так");
+                        }
+                    }
+
+                }
+
+            }
+        });
 
 //закрываем подключение
 
